@@ -1,0 +1,233 @@
+/* Global Styles */
+body {
+  display: block !important;
+  justify-content: initial !important;
+  align-items: initial !important;
+  min-height: 100vh;
+}
+
+.glass {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  color: #fff;
+  border-radius: 10px;
+}
+
+.page {
+  width: min(1100px, 92%);
+  margin: 20px auto;
+}
+
+.hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.hdr .title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.hdr .links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.hdr .links a:hover {
+  text-decoration: underline;
+}
+
+.dash {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+  min-height: calc(100vh - 140px);
+}
+
+.card {
+  padding: 18px;
+}
+
+/* Left Box: User List */
+.users-list {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 400px;   /* Set a maximum height */
+  overflow-y: auto;    /* Enable vertical scrolling */
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1); /* Optional: background to differentiate the box */
+  border-radius: 10px; /* Optional: rounded corners */
+}
+
+.users-list h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.users-list ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.users-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.user-name {
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.btn-delete {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: darkred;
+}
+
+/* Right Box: Upcoming Alumni Events */
+.events {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.events h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.elist {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.elist li {
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.etitle {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.emeta {
+  opacity: .95;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-edit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 20px;
+  align-self: center;
+}
+
+.btn-edit:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Glass Effect for Add and Edit Event Cards */
+.card {
+  padding: 20px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  border-radius: 10px;
+}
+
+/* Glass Effect for Form Inputs */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="datetime-local"],
+textarea {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Slight transparent border */
+  background: rgba(255, 255, 255, 0.1); /* Slight transparent background */
+  font-size: 14px;
+  color: #fff;
+}
+
+textarea {
+  height: 100px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Card title */
+h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #fff;
+}
