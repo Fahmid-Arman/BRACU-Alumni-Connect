@@ -230,14 +230,11 @@ These demo accounts are inserted by [sql/seed.sql](sql/seed.sql).
 - Improve mobile responsiveness and visual polish
 - Add automated tests and deployment instructions
 
-## Resume Positioning
+## Resume Copy
 
 **BRACU Alumni Connect | Alumni Networking Platform**  
 **PHP, MySQL, SQL, Database Design, Secure Web App Fundamentals**
 
-This project demonstrates:
-
-- relational database design for role-based users and platform interactions
-- secure authentication and authorization in plain PHP
-- database-backed alumni discovery, messaging, mentorship requests, and admin controls
-- the ability to turn an academic database project into a portfolio-ready web application
+- Developed a database-driven alumni networking platform connecting students, alumni, and administrators through role-based dashboards, profile management, discovery filters, messaging, events, and mentorship requests.
+- Designed and implemented a relational MySQL schema for users, student/alumni profiles, events, messages, and connection requests, supported by SQL schema and seed files for local setup.
+- Improved application security using password hashing, prepared statements, session-based role access control, CSRF protection, input validation, safe PDF upload handling, and escaped output.
