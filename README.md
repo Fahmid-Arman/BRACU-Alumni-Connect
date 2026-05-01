@@ -93,8 +93,19 @@ This design keeps shared identity data centralized while separating role-specifi
 
 ## Repository Guide
 
+- [config/DBconnect.php](config/DBconnect.php): database connection bootstrap
+- [includes/auth.php](includes/auth.php): shared auth, session, CSRF, escaping, and routing helpers
+- [auth/](auth): login, signup, and logout pages
+- [student/](student): student dashboard, profile, search, and sent request pages
+- [alumni/](alumni): alumni dashboard, profile, search, and received request pages
+- [admin/](admin): admin dashboard and event/user management pages
+- [shared/](shared): inbox, public profiles, and connection request submit flow
+- [assets/css/](assets/css): project stylesheets
+- [assets/images/](assets/images): shared image assets
 - [sql/schema.sql](sql/schema.sql): database schema
 - [sql/seed.sql](sql/seed.sql): demo seed data
+- [uploads/](uploads): uploaded student CV files
+- [screenshots/](screenshots): repository screenshot placeholders or exports
 - [.env.example](.env.example): example database environment variable names
 - [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md): interview-focused technical summary
 - [CHANGELOG.md](CHANGELOG.md): project evolution by phase
@@ -152,7 +163,7 @@ export DB_USER=root
 export DB_PASS='your_actual_mysql_password'
 ```
 
-If your local MySQL root account has no password, set `DB_PASS` to an empty string for your own machine only. As a fallback, you can also edit the local defaults in [DBconnect.php](DBconnect.php).
+If your local MySQL root account has no password, set `DB_PASS` to an empty string for your own machine only. As a fallback, you can also edit the local defaults in [config/DBconnect.php](config/DBconnect.php).
 
 Note: this repository includes `.env.example` as a reference file, but the application does not auto-load a `.env` file with a dotenv library.
 
@@ -164,10 +175,11 @@ php -S localhost:8000
 
 ### 5. Open the project
 
-Visit:
+Visit either the root landing page or the auth entry page:
 
 ```text
-http://localhost:8000/index.php
+http://localhost:8000/
+http://localhost:8000/auth/index.php
 ```
 
 ## Demo Credentials
@@ -184,12 +196,12 @@ These demo accounts are inserted by [sql/seed.sql](sql/seed.sql).
 
 Add screenshots here before publishing the repository:
 
-- `docs/screenshots/login-page.png` - Login page
-- `docs/screenshots/student-dashboard.png` - Student dashboard
-- `docs/screenshots/alumni-search.png` - Alumni discovery flow
-- `docs/screenshots/public-profile.png` - Public alumni profile
-- `docs/screenshots/requests.png` - Connection request workflow
-- `docs/screenshots/admin-dashboard.png` - Admin dashboard
+- `screenshots/login-page.png` - Login page
+- `screenshots/student-dashboard.png` - Student dashboard
+- `screenshots/alumni-search.png` - Alumni discovery flow
+- `screenshots/public-profile.png` - Public alumni profile
+- `screenshots/requests.png` - Connection request workflow
+- `screenshots/admin-dashboard.png` - Admin dashboard
 
 ## Future Improvements
 
