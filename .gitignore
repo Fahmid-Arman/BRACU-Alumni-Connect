@@ -13,3 +13,6 @@ node_modules/
 *.local.sql
 *.bak.sql
 backups/
+.env
+.env.*
+!.env.example
