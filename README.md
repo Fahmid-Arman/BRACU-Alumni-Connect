@@ -194,34 +194,50 @@ These demo accounts are inserted by [sql/seed.sql](sql/seed.sql).
 
 ## Screenshots
 
-Add screenshots here before publishing the repository:
+### Login Page
+![Login Page](screenshots/login.png)
 
-- `screenshots/login-page.png` - Login page
-- `screenshots/student-dashboard.png` - Student dashboard
-- `screenshots/alumni-search.png` - Alumni discovery flow
-- `screenshots/public-profile.png` - Public alumni profile
-- `screenshots/requests.png` - Connection request workflow
-- `screenshots/admin-dashboard.png` - Admin dashboard
+### Student Dashboard
+![Student Dashboard](screenshots/student-dashboard.png)
+
+### Alumni Discovery
+![Alumni Discovery](screenshots/alumni-search.png)
+
+### Public Alumni Profile
+![Public Alumni Profile](screenshots/alumni-profile.png)
+
+### Messaging Inbox
+![Messaging Inbox](screenshots/inbox.png)
+
+### Student Sent Requests
+![Student Sent Requests](screenshots/sent-requests.png)
+
+### Alumni Received Requests
+![Alumni Received Requests](screenshots/received-requests.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### Admin Event Management
+![Admin Event Management](screenshots/admin-events.png)
 
 ## Future Improvements
 
 - Add pagination and sorting for search and request pages
-- Add a dedicated “connected alumni” or “accepted connections” view
-- Add notification UX for accepted or rejected requests
-- Add richer event workflows such as RSVP tracking or attendance
+- Add a dedicated accepted connections view
+- Add notifications for accepted or rejected mentorship requests
+- Add RSVP tracking for events
 - Improve mobile responsiveness and visual polish
 - Add automated tests and deployment instructions
 
 ## Resume Positioning
 
-This project is suitable for presenting as:
-
 **BRACU Alumni Connect | Alumni Networking Platform**  
-**SQL, MySQL, PHP, Database Design, Secure Web App Fundamentals**
+**PHP, MySQL, SQL, Database Design, Secure Web App Fundamentals**
 
-Strong talking points for interviews:
+This project demonstrates:
 
-- designed a normalized relational schema for role-based users and platform interactions
-- built secure authentication and authorization patterns in plain PHP
-- implemented database-backed discovery, messaging, request workflows, and admin controls
-- translated an academic database project into a portfolio-ready web application
+- relational database design for role-based users and platform interactions
+- secure authentication and authorization in plain PHP
+- database-backed alumni discovery, messaging, mentorship requests, and admin controls
+- the ability to turn an academic database project into a portfolio-ready web application
