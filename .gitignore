@@ -1,0 +1,15 @@
+.DS_Store
+
+uploads/*
+!uploads/.gitkeep
+
+.env
+.env.*
+
+vendor/
+node_modules/
+
+*.log
+*.local.sql
+*.bak.sql
+backups/

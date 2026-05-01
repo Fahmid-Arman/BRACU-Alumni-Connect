@@ -45,6 +45,37 @@ body {
   text-decoration: underline;
 }
 
+.quick-links-card {
+  margin-top: 16px;
+}
+
+.quick-links-card h3 {
+  margin: 0 0 12px;
+}
+
+.quick-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.quick-link-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 14px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.quick-link-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 .dash {
   margin-top: 16px;
   display: grid;
@@ -134,6 +165,12 @@ body {
   margin: 0 0 10px;
 }
 
+.events-subtitle {
+  margin: 0 0 12px;
+  font-size: 14px;
+  opacity: .85;
+}
+
 .elist {
   list-style: none;
   padding: 0;
@@ -161,4 +198,11 @@ body {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.edesc {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: .92;
 }

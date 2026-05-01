@@ -74,7 +74,8 @@ body {
 }
 
 .search-options select,
-.search-options input[type="text"] {
+.search-options input[type="text"],
+.search-options input[type="number"] {
   padding: 8px 12px;
   border: 2px solid rgba(255,255,255,0.3);
   border-radius: 10px;
@@ -103,6 +104,20 @@ body {
   background: rgba(255,255,255,0.1);
 }
 
+.search-note {
+  margin: 0;
+  font-size: 14px;
+  opacity: .85;
+}
+
+.status-banner {
+  margin: 0;
+  padding: 10px 12px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .search-results {
   display: grid;
   gap: 12px;
@@ -122,6 +137,14 @@ body {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
+  grid-column: 1 / -1;
+}
+
+.result-handle {
+  margin: -2px 0 4px;
+  font-size: 13px;
+  opacity: .8;
+  grid-column: 1 / -1;
 }
 
 .search-result-item span {
@@ -129,8 +152,164 @@ body {
   opacity: .85;
 }
 
+.result-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.result-actions .btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 40px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.result-actions .btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.result-actions .btn-secondary {
+  border-color: rgba(244, 67, 54, 0.6);
+}
+
+.inline-action-form {
+  display: inline-flex;
+  margin: 0;
+}
+
+.request-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.request-status-pending {
+  background: rgba(255, 193, 7, 0.16);
+}
+
+.request-status-accepted {
+  background: rgba(76, 175, 80, 0.18);
+}
+
+.request-status-rejected {
+  background: rgba(244, 67, 54, 0.18);
+}
+
+.request-status-cancelled {
+  background: rgba(96, 125, 139, 0.2);
+}
+
+.request-note {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  opacity: .85;
+}
+
+.request-message-box {
+  grid-column: 1 / -1;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.request-message {
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
 .no-results {
   margin-top: 12px;
   color: #fff;
   font-style: italic;
+}
+
+.prefill-note {
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.message-item {
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  font-size: 13px;
+  opacity: .85;
+}
+
+.message-direction {
+  font-weight: 600;
+}
+
+.message-body {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.message-form {
+  display: grid;
+  gap: 10px;
+}
+
+.message-form label {
+  font-weight: 600;
+}
+
+.message-form input[type="number"],
+.message-form textarea {
+  padding: 8px 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+}
+
+.message-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.message-form button {
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 40px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.message-form button:hover {
+  background: rgba(255,255,255,0.1);
 }

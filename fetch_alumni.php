@@ -1,14 +1,9 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit();
-}
-
-$user_id = $_SESSION['user_id'];
-
+require_once('auth.php');
+require_role('alumni');
 require_once('DBconnect.php');
+
+$user_id = current_user_id();
 
 $sql = "SELECT users.first_name, users.last_name, users.username, 
                alumni.github, alumni.linkedin, alumni.sex, alumni.city, alumni.country, alumni.zip_code,
@@ -17,9 +12,18 @@ $sql = "SELECT users.first_name, users.last_name, users.username,
                alumni.employment_start_date, alumni.location, alumni.business_name, alumni.business_theme
         FROM users
         JOIN alumni ON users.user_id = alumni.user_id
-        WHERE users.user_id = $user_id";
+        WHERE users.user_id = ?";
 
-$result = mysqli_query($conn, $sql);
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    echo "Unable to load alumni data.";
+    exit();
+}
+
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result && mysqli_num_rows($result) > 0) {
     $alumni_data = mysqli_fetch_assoc($result);

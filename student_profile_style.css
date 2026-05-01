@@ -160,6 +160,15 @@ body {
   margin-top: 15px;
 }
 
+.profile-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
 .edit-btn {
   padding: 10px 25px !important;
   background: transparent !important;
@@ -193,6 +202,90 @@ body {
 
 .grid-info .row strong a:active {
   color: #fff !important;
+}
+
+.notice-card {
+  width: 100%;
+  text-align: center;
+  display: grid;
+  gap: 12px;
+}
+
+.notice-text {
+  margin: 0;
+  opacity: .9;
+}
+
+.request-panel {
+  margin-top: 18px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: left;
+}
+
+.request-panel h4 {
+  margin: 0 0 10px;
+}
+
+.request-panel-form {
+  display: grid;
+  gap: 10px;
+}
+
+.request-panel-form textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 10px 12px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #fff;
+  resize: vertical;
+}
+
+.request-panel-form textarea:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+  outline: none;
+}
+
+.request-note-block {
+  margin: 0 0 12px;
+  opacity: .9;
+}
+
+.request-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.request-status-pending {
+  background: rgba(255, 193, 7, 0.16);
+}
+
+.request-status-accepted {
+  background: rgba(76, 175, 80, 0.18);
+}
+
+.request-status-rejected {
+  background: rgba(244, 67, 54, 0.18);
+}
+
+.request-status-cancelled {
+  background: rgba(96, 125, 139, 0.2);
+}
+
+.status-banner {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .profile form input[type="text"],

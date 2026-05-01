@@ -1,26 +1,74 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit();
-}
-
+require_once('auth.php');
+require_role('alumni');
 require_once('DBconnect.php');
 
-$search_query = $_GET['search_query'] ?? '';
+$programme = trim($_GET['programme'] ?? ($_GET['search_query'] ?? ''));
+$expertise = trim($_GET['expertise'] ?? '');
+$cgpa_min = trim($_GET['cgpa_min'] ?? '');
+$city = trim($_GET['city'] ?? '');
+$country = trim($_GET['country'] ?? '');
 $search_results = [];
+$search_error = '';
+$applied_filters = [];
 
-if (!empty($search_query)) {
-    $sql = "SELECT u.first_name, u.last_name, s.programme, s.cgpa, s.city, s.country, s.expertise 
-            FROM students s 
-            JOIN users u ON s.user_id = u.user_id 
-            WHERE LOWER(s.programme) LIKE LOWER(?)";
+if ($cgpa_min !== '' && !is_numeric($cgpa_min)) {
+    $search_error = 'Minimum CGPA must be a number.';
+} else {
+    $sql = "SELECT u.user_id, u.first_name, u.last_name, u.username, s.programme, s.cgpa, s.city, s.country, s.expertise, s.email
+            FROM students s
+            JOIN users u ON s.user_id = u.user_id";
+    $conditions = [];
+    $params = [];
+    $types = '';
 
+    if ($programme !== '') {
+        $conditions[] = "s.programme LIKE ?";
+        $params[] = '%' . $programme . '%';
+        $types .= 's';
+        $applied_filters[] = 'Programme: ' . $programme;
+    }
+
+    if ($expertise !== '') {
+        $conditions[] = "s.expertise LIKE ?";
+        $params[] = '%' . $expertise . '%';
+        $types .= 's';
+        $applied_filters[] = 'Expertise: ' . $expertise;
+    }
+
+    if ($cgpa_min !== '') {
+        $conditions[] = "s.cgpa >= ?";
+        $params[] = (float) $cgpa_min;
+        $types .= 'd';
+        $applied_filters[] = 'Minimum CGPA: ' . $cgpa_min;
+    }
+
+    if ($city !== '') {
+        $conditions[] = "s.city LIKE ?";
+        $params[] = '%' . $city . '%';
+        $types .= 's';
+        $applied_filters[] = 'City: ' . $city;
+    }
+
+    if ($country !== '') {
+        $conditions[] = "s.country LIKE ?";
+        $params[] = '%' . $country . '%';
+        $types .= 's';
+        $applied_filters[] = 'Country: ' . $country;
+    }
+
+    if ($conditions) {
+        $sql .= ' WHERE ' . implode(' AND ', $conditions);
+    }
+
+    $sql .= ' ORDER BY u.first_name ASC, u.last_name ASC LIMIT 50';
     $stmt = $conn->prepare($sql);
+
     if ($stmt) {
-        $search_query_param = '%' . $search_query . '%';
-        $stmt->bind_param("s", $search_query_param);
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -31,6 +79,11 @@ if (!empty($search_query)) {
         }
     }
 }
+
+$results_heading = !empty($applied_filters) ? 'Filtered Student Results' : 'Browse Current Students';
+$results_summary = !empty($applied_filters)
+    ? 'Showing up to 50 students matching: ' . implode(' | ', $applied_filters)
+    : 'Showing up to 50 student profiles from the current network.';
 ?>
 
 <!DOCTYPE html>
@@ -52,33 +105,41 @@ if (!empty($search_query)) {
             <a href="alumni_home.php"><i class='bx bxs-home'></i><span>Home</span></a>
             <a href="alumni_profile.php"><i class='bx bxs-user'></i><span>Profile</span></a>
             <a href="alumni_search.php"><i class='bx bx-arrow-back'></i><span>Back to Search</span></a>
+            <a href="logout.php"><i class='bx bx-log-out'></i><span>Logout</span></a>
         </nav>
     </header>
 
     <section class="dash">
         <section class="glass card search-card">
-            <h3>Students studying "<?php echo htmlspecialchars($search_query); ?>"</h3>
+            <h3><?php echo e($results_heading); ?></h3>
+            <p class="search-note"><?php echo e($results_summary); ?></p>
 
-            <?php if (!empty($search_results)): ?>
+            <?php if ($search_error): ?>
+                <div class="no-results">
+                    <p><?php echo e($search_error); ?></p>
+                </div>
+            <?php elseif (!empty($search_results)): ?>
                 <div class="search-results">
                     <?php foreach ($search_results as $row): ?>
                         <div class="search-result-item">
-                            <h4><?php echo htmlspecialchars($row['first_name'] . ' ' . $row['last_name']); ?></h4>
-                            <span><strong>Programme:</strong> <?php echo htmlspecialchars($row['programme']); ?></span>
-                            <span><strong>CGPA:</strong> <?php echo htmlspecialchars($row['cgpa']); ?></span>
-                            <span><strong>Expertise:</strong> <?php echo htmlspecialchars($row['expertise']); ?></span>
-                            <span><strong>Location:</strong> <?php echo htmlspecialchars($row['city'] . ', ' . $row['country']); ?></span>
+                            <h4><?php echo e($row['first_name'] . ' ' . $row['last_name']); ?></h4>
+                            <p class="result-handle">@<?php echo e($row['username']); ?></p>
+                            <span><strong>Programme:</strong> <?php echo e($row['programme']); ?></span>
+                            <span><strong>CGPA:</strong> <?php echo e($row['cgpa']); ?></span>
+                            <span><strong>Expertise:</strong> <?php echo e($row['expertise']); ?></span>
+                            <span><strong>Location:</strong> <?php echo e($row['city'] . ', ' . $row['country']); ?></span>
+                            <span><strong>Email:</strong> <?php echo e($row['email']); ?></span>
+                            <div class="result-actions">
+                                <a href="view_student_profile.php?user_id=<?php echo e($row['user_id']); ?>" class="btn">View Profile</a>
+                                <a href="inbox.php?to=<?php echo e($row['user_id']); ?>" class="btn">Message</a>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
-            <?php elseif (!empty($search_query)): ?>
-                <div class="no-results">
-                    <p>No students found studying "<?php echo htmlspecialchars($search_query); ?>".</p>
-                    <p>Try searching for a different programme or department.</p>
-                </div>
             <?php else: ?>
                 <div class="no-results">
-                    <p>Please enter a programme or department name to search for students.</p>
+                    <p>No students matched your current filters.</p>
+                    <p>Try broadening the search criteria from the alumni discovery page.</p>
                 </div>
             <?php endif; ?>
         </section>

@@ -1,12 +1,6 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit();
-}
-
-require_once('DBconnect.php');
+require_once('auth.php');
+require_role('student');
 ?>
 
 <!DOCTYPE html>
@@ -27,15 +21,27 @@ require_once('DBconnect.php');
         <nav class="links">
             <a href="student_home.php"><i class='bx bxs-home'></i><span>Home</span></a>
             <a href="student_profile.php"><i class='bx bxs-user'></i><span>Profile</span></a>
+            <a href="logout.php"><i class='bx bx-log-out'></i><span>Logout</span></a>
         </nav>
     </header>
 
     <section class="dash">
         <section class="glass card search-card">
+            <p class="search-note">Leave filters blank to browse the alumni network.</p>
             <form method="GET" action="alumni_list.php">
                 <div class="search-options">
-                    <input type="text" name="search_query" placeholder="Enter company name (e.g., Optimizely)" required />
-                    <button type="submit" class="btn">Search</button>
+                    <input type="text" name="company_name" placeholder="Company name" />
+                    <input type="text" name="role_title" placeholder="Role title" />
+                    <input type="text" name="degree_programme" placeholder="Degree programme" />
+                    <input type="text" name="field_of_study" placeholder="Field of study" />
+                    <input type="text" name="current_country" placeholder="Current country" />
+                    <select name="type">
+                        <option value="">Any alumni type</option>
+                        <option value="higher studies">Higher Studies</option>
+                        <option value="corporate">Corporate</option>
+                        <option value="self employed">Self Employed</option>
+                    </select>
+                    <button type="submit" class="btn">Search Alumni</button>
                 </div>
             </form>
         </section>

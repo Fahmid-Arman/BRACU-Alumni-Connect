@@ -1,21 +1,47 @@
 <?php
 require_once('DBconnect.php');
+require_once('auth.php');
+
 if (isset($_POST['fname']) && isset($_POST['pass'])) {
-    $u = $_POST['fname'];
+    $u = trim($_POST['fname']);
     $p = $_POST['pass'];
-    $sql = "SELECT user_id, role FROM users WHERE username = '$u' AND password = '$p' LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    if ($result && mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-        session_start();
-        $_SESSION['user_id'] = $row['user_id'];
-        if ($row['role'] === 'student') { header('Location: student_home.php'); exit; }
-        if ($row['role'] === 'alumni')  { header('Location: alumni_home.php'); exit; }
-        if ($row['role'] === 'admin')   { header('Location: admin_home.php'); exit; }
-        echo 'Unknown role';
-        exit;
-    } else {
-        header('Location: index.php');
+
+    $stmt = mysqli_prepare($conn, "SELECT user_id, username, password, role FROM users WHERE username = ? LIMIT 1");
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $u);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = $result ? mysqli_fetch_assoc($result) : null;
+
+        if ($row && password_verify($p, $row['password'])) {
+            start_app_session();
+            session_regenerate_id(true);
+
+            $_SESSION['user_id'] = (int) $row['user_id'];
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['role'] = $row['role'];
+
+            if ($row['role'] === 'student') {
+                header('Location: student_home.php');
+                exit;
+            }
+
+            if ($row['role'] === 'alumni') {
+                header('Location: alumni_home.php');
+                exit;
+            }
+
+            if ($row['role'] === 'admin') {
+                header('Location: admin_home.php');
+                exit;
+            }
+        }
+
+        mysqli_stmt_close($stmt);
     }
+
+    header('Location: index.php');
+    exit;
 }
 ?>

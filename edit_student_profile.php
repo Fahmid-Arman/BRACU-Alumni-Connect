@@ -1,15 +1,16 @@
 <?php
 require_once('fetch_student.php');
 
-$sql = "SELECT * FROM students WHERE user_id = $user_id";
-$result = mysqli_query($conn, $sql);
+$student_error_messages = [
+    'invalid_profile_data' => 'Please review the submitted profile details and try again.',
+    'invalid_email' => 'Please enter a valid email address.',
+    'invalid_cgpa' => 'Please enter a valid numeric CGPA.',
+    'invalid_cv_type' => 'Please upload a PDF file only.',
+    'cv_too_large' => 'Please upload a PDF smaller than 2 MB.',
+    'upload_failed' => 'The CV upload failed. Please try again.',
+];
 
-if ($result && mysqli_num_rows($result) > 0) {
-    $student_data = mysqli_fetch_assoc($result);
-} else {
-    echo "No student data found.";
-    exit();
-}
+$student_error = $student_error_messages[$_GET['error'] ?? ''] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +30,7 @@ if ($result && mysqli_num_rows($result) > 0) {
       <div class="title">Edit Profile</div>
       <nav class="links">
         <a href="student_profile.php"><i class='bx bxs-home'></i><span>Home</span></a>
+        <a href="logout.php"><i class='bx bx-log-out'></i><span>Logout</span></a>
       </nav>
     </header>
 
@@ -38,43 +40,47 @@ if ($result && mysqli_num_rows($result) > 0) {
         <form method="POST" action="update_student_profile.php" enctype="multipart/form-data">
           <div class="info">
             <h3 class="name">Edit Your Profile</h3>
+            <?php if ($student_error): ?>
+              <p><?php echo e($student_error); ?></p>
+            <?php endif; ?>
+            <input type="hidden" name="csrf_token" value="<?php echo e(csrf_token()); ?>" />
             <div class="grid-info">
               <div class="row">
                 <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" value="<?php echo $student_data['first_name']; ?>" required />
+                <input type="text" id="first_name" name="first_name" value="<?php echo e($student_data['first_name']); ?>" required />
               </div>
               <div class="row">
                 <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" value="<?php echo $student_data['last_name']; ?>" required />
+                <input type="text" id="last_name" name="last_name" value="<?php echo e($student_data['last_name']); ?>" required />
               </div>
               <div class="row">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo $student_data['email']; ?>" required />
+                <input type="email" id="email" name="email" value="<?php echo e($student_data['email']); ?>" required />
               </div>
               <div class="row">
                 <label for="programme">Programme:</label>
-                <input type="text" id="programme" name="programme" value="<?php echo $student_data['programme']; ?>" required />
+                <input type="text" id="programme" name="programme" value="<?php echo e($student_data['programme']); ?>" required />
               </div>
               <div class="row">
                 <label for="expertise">Expertise:</label>
-                <input type="text" id="expertise" name="expertise" value="<?php echo $student_data['expertise']; ?>" required />
+                <input type="text" id="expertise" name="expertise" value="<?php echo e($student_data['expertise']); ?>" required />
               </div>
               <div class="row">
                 <label for="cv">CV (Upload File):</label>
                 <input type="file" id="cv" name="cv" />
-                <p>Current CV: <?php echo $student_data['cv']; ?></p>
+                <p>Current CV: <?php echo e($student_data['cv']); ?></p>
               </div>
               <div class="row">
                 <label for="cgpa">CGPA:</label>
-                <input type="text" id="cgpa" name="cgpa" value="<?php echo $student_data['cgpa']; ?>" required />
+                <input type="text" id="cgpa" name="cgpa" value="<?php echo e($student_data['cgpa']); ?>" required />
               </div>
               <div class="row">
                 <label for="github">GitHub:</label>
-                <input type="url" id="github" name="github" value="<?php echo $student_data['github']; ?>" />
+                <input type="url" id="github" name="github" value="<?php echo e($student_data['github']); ?>" />
               </div>
               <div class="row">
                 <label for="linkedin">LinkedIn:</label>
-                <input type="url" id="linkedin" name="linkedin" value="<?php echo $student_data['linkedin']; ?>" />
+                <input type="url" id="linkedin" name="linkedin" value="<?php echo e($student_data['linkedin']); ?>" />
               </div>
               <div class="row">
                 <label for="sex">Sex:</label>
@@ -86,15 +92,15 @@ if ($result && mysqli_num_rows($result) > 0) {
               </div>
               <div class="row">
                 <label for="city">City:</label>
-                <input type="text" id="city" name="city" value="<?php echo $student_data['city']; ?>" required />
+                <input type="text" id="city" name="city" value="<?php echo e($student_data['city']); ?>" required />
               </div>
               <div class="row">
                 <label for="country">Country:</label>
-                <input type="text" id="country" name="country" value="<?php echo $student_data['country']; ?>" required />
+                <input type="text" id="country" name="country" value="<?php echo e($student_data['country']); ?>" required />
               </div>
               <div class="row">
                 <label for="zip_code">Zip Code:</label>
-                <input type="text" id="zip_code" name="zip_code" value="<?php echo $student_data['zip_code']; ?>" required />
+                <input type="text" id="zip_code" name="zip_code" value="<?php echo e($student_data['zip_code']); ?>" required />
               </div>
             </div>
             <button type="submit" class="btn">Save Changes</button>

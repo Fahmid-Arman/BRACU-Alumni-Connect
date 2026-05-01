@@ -1,12 +1,15 @@
 <?php
 require_once('DBconnect.php');
+require_once('auth.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $first = $_POST['first_name'];
-    $last  = $_POST['last_name'];
-    $user  = $_POST['fname'];
+    require_valid_csrf_token();
+
+    $first = trim($_POST['first_name']);
+    $last  = trim($_POST['last_name']);
+    $user  = trim($_POST['fname']);
     $pass  = $_POST['pass'];
     $cpass = $_POST['cpass'];
-    $role  = $_POST['role'];
+    $role  = trim($_POST['role']);
     
     if ($pass !== $cpass) { 
         exit('Passwords do not match.');
@@ -14,9 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($role !== 'student' && $role !== 'alumni') { 
         exit('Invalid role.');
     }
+
+    $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
+    if ($hashed_pass === false) {
+        exit('Failed to secure password.');
+    }
     
     $stmt = mysqli_prepare($conn, "INSERT INTO users (first_name, last_name, username, password, role) VALUES (?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $user, $pass, $role);
+    mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $user, $hashed_pass, $role);
     
     if (mysqli_stmt_execute($stmt)) {
         $user_id = mysqli_insert_id($conn);

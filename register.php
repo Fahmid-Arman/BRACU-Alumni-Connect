@@ -1,4 +1,4 @@
-<?php ?>
+<?php require_once('auth.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +13,7 @@
   <div class="wrapper">
     <form action="signup.php" method="post" autocomplete="on">
       <h1>Create Account</h1>
+      <input type="hidden" name="csrf_token" value="<?php echo e(csrf_token()); ?>" />
 
       <div class="input-box">
         <input type="text" name="first_name" placeholder="First name" required />

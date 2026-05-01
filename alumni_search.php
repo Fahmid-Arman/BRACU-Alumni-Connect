@@ -1,12 +1,6 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit();
-}
-
-require_once('DBconnect.php');
+require_once('auth.php');
+require_role('alumni');
 ?>
 
 <!DOCTYPE html>
@@ -27,15 +21,21 @@ require_once('DBconnect.php');
         <nav class="links">
             <a href="alumni_home.php"><i class='bx bxs-home'></i><span>Home</span></a>
             <a href="alumni_profile.php"><i class='bx bxs-user'></i><span>Profile</span></a>
+            <a href="logout.php"><i class='bx bx-log-out'></i><span>Logout</span></a>
         </nav>
     </header>
 
     <section class="dash">
         <section class="glass card search-card">
+            <p class="search-note">Leave filters blank to browse current students.</p>
             <form method="GET" action="student_list.php">
                 <div class="search-options">
-                    <input type="text" name="search_query" placeholder="Enter department(e.g., CS)" required />
-                    <button type="submit" class="btn">Search</button>
+                    <input type="text" name="programme" placeholder="Programme" />
+                    <input type="text" name="expertise" placeholder="Expertise" />
+                    <input type="number" step="0.01" min="0" max="4" name="cgpa_min" placeholder="Minimum CGPA" />
+                    <input type="text" name="city" placeholder="City" />
+                    <input type="text" name="country" placeholder="Country" />
+                    <button type="submit" class="btn">Search Students</button>
                 </div>
             </form>
         </section>
